@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    background: #181818;
+    font-family: "Inter";
+    color: rgb(217,217,227);
+}
+
+h1 {
+    font-weight: bolder;
+    text-align: center;
+    padding-top: 10rem;
+    color: white;
+}
+
+.center {
+    text-align: center;
+}
+
+#topBar {
+    padding: 1rem 2rem;
+    /* border-bottom: .25px solid #e5e7eb; */
+}
+
+a {
+    text-decoration: none;
+}
+
+#CTA {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    width: 50%;
+    margin: auto;
+}
+
+#mainCTA {
+    background: rgb(168,85,247);
+    cursor: pointer;
+    padding: 1rem;
+    color: black;
+    border-radius: 5px;
+}
+
+#altCTA {
+
+    background: #e47c25;
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+    padding: 1rem;
+}
+
+#email {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 20px;
+    border-bottom: 1px solid #a855f7;
+}
+
+#emailpls {
+    backdrop-filter: blur(10px);
+    position: absolute;
+    display: none;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#notice {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+#notice svg {
+    transform: translateY(3px);
+}
+#notice a {
+    color: white;
+    text-decoration: underline;
+}
+
+.gay {
+    color: #a855f7;
+}

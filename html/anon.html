@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/static/serve.js"></script>
+    <title>Verify by Kitsu</title>
+</head>
+<body>
+    <div id="emailpls" onclick="fadeOutEffect()">
+        <div id="inner">
+            <h2>First, could I have your <span class="gay">Email</span>?</h2>
+            <p>I'll use this to get in touch with you, just in<br>case we need to take a bit longer than normal.</p>
+            <input type="email" name="emailer" id="email">
+        </div>
+    </div>
+
+    <div id="topBar">
+        <img src="https://kitsu.life/_ipx/w_32&f_webp/https://status.kitsunes.club/upload/logo1.png" alt="">
+    </div>
+
+    <h1>KitsuGay requires <span class="gay">ID verification</span>.</h1>
+    <p class="center">This is to comply with law and regulation, and to protect minors from sensitive content.</p>
+    <div id="CTA">
+        <span id="mainCTA">Verify</span>
+        <a href="https://kitsunes.club/"><span id="altCTA">Join KitsuClub</span></a>
+    </div>
+    <div id="notice">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        Kitsu uses Stripe for automated ID verification. If you object to automated ID Verification, please <a href="mailto:kio@kitsunes.club">email us</a>.
+    </div>
+    <script type="text/javascript">
+        // Set your publishable key: remember to change this to your live publishable key in production
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        var stripe = Stripe('pk_test_51M9OjpIoDfYj24Qp1mJHE8ZhHJxfdyLAppg9w1SYbmanHbk2oQEcIkPKteB3xwFL3N6Gj3GSJ9R6mheCEQpwdmi200cTcOmAzp');
+        var verifyButton = document.getElementById('mainCTA');
+
+        const fadeOutEffect = () => {
+    var fadeTarget = document.getElementById("emailpls");
+    var fadeEffect = setInterval(function () {
+        if (!fadeTarget.style.opacity) {
+            fadeTarget.style.opacity = 1;
+        }
+        if (parseFloat(fadeTarget.style.opacity) !== 0) {
+            fadeTarget.style.opacity -= 0.1;
+        } else {
+            fadeTarget.style.display = 'none';
+            clearInterval(fadeEffect);
+        }
+    }, 30);
+}
+    const fadeInEffect = () => {
+    var fadeTarget = document.getElementById("emailpls");
+    console.log('display!!')
+    fadeTarget.style.opacity = 0;
+    fadeTarget.style.display = 'flex';
+    var fadeIn = setInterval(function () {
+        if (parseFloat(fadeTarget.style.opacity) !== 1) {
+            console.log('fading in!!' + fadeTarget.style.opacity)
+            fadeTarget.style.opacity = parseFloat(fadeTarget.style.opacity) + 0.1;
+        } else {
+            clearInterval(fadeIn);
+        }
+    }, 30);
+}
+
+verifyButton.addEventListener('click', function() {
+    fadeInEffect()
+})
+
+function afterEmail() {
+  // Get the VerificationSession client secret using the server-side
+  // endpoint you created in step 3.
+  fetch('/create-verification-session', {
+    method: 'POST',
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(session) {
+    // Show the verification modal.
+    return stripe.verifyIdentity(session.client_secret);
+  })
+  .then(function(result) {
+    // If `verifyIdentity` fails, you should display the localized
+    // error message to your user using `error.message`.
+    if (result.error) {
+      alert(result.error.message);
+    }
+  })
+  .catch(function(error) {
+    console.error('Error:', error);
+  });
+};
+      </script>
+</body>
+</html>
